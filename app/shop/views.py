@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView, View
 from django.shortcuts import get_object_or_404
 from .models import Item, Order
+import requests
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -41,7 +42,7 @@ class BuyItemView(View):
     """
     def get(self, request, pk, *args, **kwargs):
         item = get_object_or_404(Item, pk=pk)
-        domain_url = 'http://localhost:8000/' # В проде использовать request.build_absolute_uri('/')
+        domain_url = request.build_absolute_uri('/')
         
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -85,7 +86,7 @@ class BuyOrderView(View):
     """
     def get(self, request, pk, *args, **kwargs):
         order = get_object_or_404(Order, pk=pk)
-        domain_url = 'http://localhost:8000/'
+        domain_url = request.build_absolute_uri('/')
 
         # 1. Создание купона в Stripe (если есть скидка)
         stripe_coupon_id = None
