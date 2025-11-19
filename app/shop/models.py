@@ -13,6 +13,10 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+    def display_price(self):
+        """Возвращает цену в читаемом формате (делит цену на 100)"""
+        return "{0:.2f}".format(self.price / 100)
+
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
@@ -70,6 +74,10 @@ class Order(models.Model):
         if self.tax:
             total = total * (1 + float(self.tax.rate) / 100)
         return int(total)
+    
+    def display_total_price(self):
+        """Возвращает итоговую сумму в читаемом формате (делит цену на 100)"""
+        return "{0:.2f}".format(self.get_total_price() / 100)
 
     class Meta:
         verbose_name = "Заказ"

@@ -21,7 +21,7 @@
         <ul>
             {% for item in items %}
             <li>
-                <span>{{ item.name }} <span class="price">({{ item.price }} {{ item.currency }})</span></span>
+                <span>{{ item.name }} <span class="price">({{ item.display_price }} {{ item.currency }})</span></span>
                 <a href="{% url 'item_detail' item.id %}">Смотреть и Купить</a>
             </li>
             {% endfor %}
@@ -35,7 +35,7 @@
         <ul>
             {% for order in orders %}
             <li>
-                <span>Заказ #{{ order.id }} <span class="price">(Итого: {{ order.get_total_price }})</span></span>
+                <span>Заказ #{{ order.id }} <span class="price">(Итого: {{ order.display_total_price }})</span></span>
                 <a href="{% url 'order_detail' order.id %}">Оплатить заказ</a>
             </li>
             {% endfor %}

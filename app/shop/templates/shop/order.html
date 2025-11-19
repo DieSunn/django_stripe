@@ -41,7 +41,7 @@
             {% for item in items %}
                 <li>
                     <span>{{ item.name }}</span>
-                    <span>{{ item.price }} {{ item.currency|upper }}</span>
+                    <span>{{ item.display_price }} {{ item.currency|upper }}</span>
                 </li>
             {% endfor %}
         </ul>
@@ -57,7 +57,7 @@
         </div>
 
         <div class="total">
-            Итого к оплате: {{ order.get_total_price }} (коп/центов)
+            Итого к оплате: {{ order.display_total_price }} (центов)
         </div>
 
         <button id="buy-button">Оплатить Заказ</button>
