@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Магазин Django + Stripe</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; background: #f6f9fc; }
+        h1 { color: #32325d; }
+        h2 { border-bottom: 2px solid #e6ebf1; padding-bottom: 10px; margin-top: 30px; }
+        ul { list-style: none; padding: 0; }
+        li { background: white; margin-bottom: 10px; padding: 15px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        a { text-decoration: none; color: #5469d4; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        .price { color: #8898aa; }
+    </style>
+</head>
+<body>
+    <h1>Django + Stripe</h1>
+
+    <h2>Доступные товары</h2>
+    {% if items %}
+        <ul>
+            {% for item in items %}
+            <li>
+                <span>{{ item.name }} <span class="price">({{ item.price }} {{ item.currency }})</span></span>
+                <a href="{% url 'item_detail' item.id %}">Смотреть и Купить</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Товаров нет. <a href="/admin/">Добавить через Админку</a></p>
+    {% endif %}
+
+    <h2>Созданные заказы</h2>
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+            <li>
+                <span>Заказ #{{ order.id }} <span class="price">(Итого: {{ order.get_total_price }})</span></span>
+                <a href="{% url 'order_detail' order.id %}">Оплатить заказ</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Заказов нет. <a href="/admin/">Создать через Админку</a></p>
+    {% endif %}
+</body>
+</html>
