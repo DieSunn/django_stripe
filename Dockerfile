@@ -11,7 +11,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Сбор статики
-RUN python manage.py collectstatic --noinput
+RUN SECRET_KEY=building_secret_key \
+    STRIPE_PUBLIC_KEY=pk_test_build \
+    STRIPE_SECRET_KEY=sk_test_build \
+    ALLOWED_HOSTS=127.0.0.1,localhost \
+    DEBUG=True \
+    python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
